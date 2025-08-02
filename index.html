@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couple's Grievance Portal</title>
+    <meta name="description" content="A private space for couples to lovingly track and resolve disagreements">
+    <meta name="theme-color" content="#2A6F6F">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        .status-pending {
+            background-color: #F3D28C;
+            color: #8B4513;
+        }
+        
+        .status-in-progress {
+            background-color: #AEC6CF;
+            color: #2C5F5F;
+        }
+        
+        .status-resolved {
+            background-color: #A5D6A7;
+            color: #2E7D32;
+        }
+        
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Firebase Config -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDWpMpp7WAvIrP2_5v1quV3sNEDALWnuR4",
+            authDomain: "grievance-portal-46adc.firebaseapp.com",
+            projectId: "grievance-portal-46adc",
+            storageBucket: "grievance-portal-46adc.firebasestorage.app",
+            messagingSenderId: "855890469658",
+            appId: "1:855890469658:web:e477b1c2d69c1c342902a3"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+    </script>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-teal-600 mx-auto mb-4"></div>
+            <p class="text-gray-600 text-lg">Loading your portal...</p>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="hidden">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-100">
+            <div class="max-w-4xl mx-auto px-4 py-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">💕 Couple's Grievance Portal</h1>
+                        <p class="text-gray-600 mt-1">A loving space to resolve together</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-500">Portal ID</p>
+                        <p id="portalId" class="font-mono text-sm bg-gray-100 px-2 py-1 rounded text-gray-700"></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-4xl mx-auto px-4 py-8">
+            <!-- Add Grievance Form -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <i data-feather="plus-circle" class="w-5 h-5 mr-2 text-teal-600"></i>
+                    Add New Grievance
+                </h2>
+                <form id="grievanceForm" class="space-y-4">
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                        <input 
+                            type="text" 
+                            id="title" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200"
+                            placeholder="What's on your mind?"
+                        >
+                    </div>
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea 
+                            id="description" 
+                            required
+                            rows="3"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200 resize-none"
+                            placeholder="Share the details with love..."
+                        ></textarea>
+                    </div>
+                    <button 
+                        type="submit"
+                        class="w-full bg-teal-600 text-white py-3 px-6 rounded-full font-medium btn-hover hover:bg-teal-700 flex items-center justify-center"
+                    >
+                        <i data-feather="heart" class="w-5 h-5 mr-2"></i>
+                        Submit with Love
+                    </button>
+                </form>
+            </div>
+
+            <!-- Grievances List -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <i data-feather="list" class="w-5 h-5 mr-2 text-teal-600"></i>
+                    Our Grievances
+                </h2>
+                
+                <!-- Status Filter -->
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button 
+                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 active"
+                        data-status="all"
+                    >
+                        All
+                    </button>
+                    <button 
+                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+                        data-status="pending"
+                    >
+                        Pending
+                    </button>
+                    <button 
+                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+                        data-status="in-progress"
+                    >
+                        In Progress
+                    </button>
+                    <button 
+                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+                        data-status="resolved"
+                    >
+                        Resolved
+                    </button>
+                </div>
+
+                <!-- Grievances Container -->
+                <div id="grievancesContainer" class="space-y-4">
+                    <!-- Grievances will be populated here -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="text-center py-12 hidden">
+                    <i data-feather="heart" class="w-16 h-16 text-gray-300 mx-auto mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-600 mb-2">No grievances yet!</h3>
+                    <p class="text-gray-500">Add your first grievance above to get started.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let currentUser = null;
+        let portalId = null;
+        let currentFilter = 'all';
+
+        // Initialize the app
+        async function initializeApp() {
+            try {
+                // Sign in anonymously
+                const userCredential = await auth.signInAnonymously();
+                currentUser = userCredential.user;
+                
+                // Generate or retrieve portal ID
+                portalId = localStorage.getItem('portalId') || generatePortalId();
+                localStorage.setItem('portalId', portalId);
+                
+                document.getElementById('portalId').textContent = portalId;
+                
+                // Set up real-time listener
+                setupRealtimeListener();
+                
+                // Show the app
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('app').classList.remove('hidden');
+                
+                // Initialize Feather icons
+                feather.replace();
+                
+            } catch (error) {
+                console.error('Error initializing app:', error);
+                alert('Failed to initialize the app. Please refresh and try again.');
+            }
+        }
+
+        // Generate a random portal ID
+        function generatePortalId() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        // Set up real-time listener for grievances
+        function setupRealtimeListener() {
+            db.collection('portals').doc(portalId).collection('grievances')
+                .orderBy('createdAt', 'desc')
+                .onSnapshot((snapshot) => {
+                    const grievances = [];
+                    snapshot.forEach((doc) => {
+                        grievances.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    renderGrievances(grievances);
+                }, (error) => {
+                    console.error('Error listening to grievances:', error);
+                });
+        }
+
+        // Render grievances
+        function renderGrievances(grievances) {
+            const container = document.getElementById('grievancesContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Filter grievances based on current filter
+            const filteredGrievances = currentFilter === 'all' 
+                ? grievances 
+                : grievances.filter(g => g.status === currentFilter);
+            
+            if (filteredGrievances.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            container.innerHTML = filteredGrievances.map(grievance => `
+                <div class="bg-gray-50 rounded-xl p-6 card-hover border border-gray-100">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">${escapeHtml(grievance.title)}</h3>
+                        <select 
+                            class="status-select px-3 py-1 rounded-full text-sm font-medium border-0 focus:ring-2 focus:ring-teal-500"
+                            data-id="${grievance.id}"
+                            data-status="${grievance.status}"
+                        >
+                            <option value="pending" ${grievance.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="in-progress" ${grievance.status === 'in-progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="resolved" ${grievance.status === 'resolved' ? 'selected' : ''}>Resolved</option>
+                        </select>
+                    </div>
+                    <p class="text-gray-600 mb-4">${escapeHtml(grievance.description)}</p>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>Created ${formatDate(grievance.createdAt)}</span>
+                        <span class="status-badge px-2 py-1 rounded-full text-xs font-medium status-${grievance.status}">
+                            ${getStatusText(grievance.status)}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Re-initialize Feather icons
+            feather.replace();
+            
+            // Add event listeners to status selects
+            document.querySelectorAll('.status-select').forEach(select => {
+                select.addEventListener('change', handleStatusChange);
+            });
+        }
+
+        // Handle status change
+        async function handleStatusChange(event) {
+            const grievanceId = event.target.dataset.id;
+            const newStatus = event.target.value;
+            
+            try {
+                await db.collection('portals').doc(portalId).collection('grievances')
+                    .doc(grievanceId)
+                    .update({
+                        status: newStatus,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+            } catch (error) {
+                console.error('Error updating status:', error);
+                alert('Failed to update status. Please try again.');
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('grievanceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            
+            if (!title || !description) {
+                alert('Please fill in both title and description.');
+                return;
+            }
+            
+            try {
+                await db.collection('portals').doc(portalId).collection('grievances').add({
+                    title: title,
+                    description: description,
+                    status: 'pending',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Clear form
+                document.getElementById('title').value = '';
+                document.getElementById('description').value = '';
+                
+            } catch (error) {
+                console.error('Error adding grievance:', error);
+                alert('Failed to add grievance. Please try again.');
+            }
+        });
+
+        // Handle status filter
+        document.querySelectorAll('.status-filter').forEach(button => {
+            button.addEventListener('click', (e) => {
+                // Update active state
+                document.querySelectorAll('.status-filter').forEach(btn => {
+                    btn.classList.remove('active', 'bg-teal-100', 'text-teal-700');
+                    btn.classList.add('bg-gray-100', 'text-gray-600');
+                });
+                e.target.classList.add('active', 'bg-teal-100', 'text-teal-700');
+                e.target.classList.remove('bg-gray-100', 'text-gray-600');
+                
+                // Update filter
+                currentFilter = e.target.dataset.status;
+                
+                // Re-render (the real-time listener will handle this)
+                setupRealtimeListener();
+            });
+        });
+
+        // Utility functions
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(timestamp) {
+            if (!timestamp) return 'Just now';
+            
+            const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+            const now = new Date();
+            const diffInHours = (now - date) / (1000 * 60 * 60);
+            
+            if (diffInHours < 1) return 'Just now';
+            if (diffInHours < 24) return `${Math.floor(diffInHours)} hours ago`;
+            if (diffInHours < 48) return 'Yesterday';
+            
+            return date.toLocaleDateString();
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': 'Pending',
+                'in-progress': 'In Progress',
+                'resolved': 'Resolved'
+            };
+            return statusMap[status] || status;
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html> 

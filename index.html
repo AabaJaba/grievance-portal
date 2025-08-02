@@ -153,9 +153,9 @@
                             </button>
                             <button 
                                 id="switchPortal"
-                                class="text-xs text-gray-600 hover:text-gray-800 px-2 py-1 rounded hover:bg-gray-100 border border-gray-200"
+                                class="text-xs bg-gray-100 text-gray-700 hover:bg-gray-200 px-2 py-1 rounded border border-gray-300 font-medium"
                             >
-                                Switch Portal
+                                🔄 Switch
                             </button>
                         </div>
                     </div>
@@ -174,10 +174,9 @@
                     </h2>
                     <button 
                         id="switchPortalMain"
-                        class="text-sm text-gray-500 hover:text-gray-700 px-3 py-1 rounded-lg hover:bg-gray-100 border border-gray-200 flex items-center"
+                        class="text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-lg border border-gray-300 font-medium"
                     >
-                        <i data-feather="refresh-cw" class="w-4 h-4 mr-1"></i>
-                        Switch Portal
+                        🔄 Switch Portal
                     </button>
                 </div>
                 <form id="grievanceForm" class="space-y-4">
@@ -373,8 +372,30 @@
                 document.getElementById('copyPortalId').addEventListener('click', copyPortalId);
                 
                 // Add switch portal functionality
-                document.getElementById('switchPortal').addEventListener('click', switchPortal);
-                document.getElementById('switchPortalMain').addEventListener('click', switchPortal);
+                const switchPortalBtn = document.getElementById('switchPortal');
+                const switchPortalMainBtn = document.getElementById('switchPortalMain');
+                
+                console.log('Switch portal button found:', !!switchPortalBtn);
+                console.log('Switch portal main button found:', !!switchPortalMainBtn);
+                
+                // Make buttons more visible for debugging
+                if (switchPortalBtn) {
+                    switchPortalBtn.style.backgroundColor = '#fbbf24';
+                    switchPortalBtn.style.color = '#000';
+                    switchPortalBtn.textContent = '🔄 SWITCH PORTAL (HEADER)';
+                }
+                if (switchPortalMainBtn) {
+                    switchPortalMainBtn.style.backgroundColor = '#fbbf24';
+                    switchPortalMainBtn.style.color = '#000';
+                    switchPortalMainBtn.textContent = '🔄 SWITCH PORTAL (MAIN)';
+                }
+                
+                if (switchPortalBtn) {
+                    switchPortalBtn.addEventListener('click', switchPortal);
+                }
+                if (switchPortalMainBtn) {
+                    switchPortalMainBtn.addEventListener('click', switchPortal);
+                }
                 
             } catch (error) {
                 console.error('Error entering portal:', error);

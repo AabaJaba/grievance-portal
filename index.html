@@ -144,12 +144,20 @@
                     <div class="text-right">
                         <p class="text-sm text-gray-500">Portal ID</p>
                         <p id="portalId" class="font-mono text-sm bg-gray-100 px-2 py-1 rounded text-gray-700"></p>
-                        <button 
-                            id="copyPortalId"
-                            class="text-xs text-teal-600 hover:text-teal-700 mt-1"
-                        >
-                            Copy ID
-                        </button>
+                        <div class="flex gap-2 mt-1">
+                            <button 
+                                id="copyPortalId"
+                                class="text-xs text-teal-600 hover:text-teal-700"
+                            >
+                                Copy ID
+                            </button>
+                            <button 
+                                id="switchPortal"
+                                class="text-xs text-gray-500 hover:text-gray-700"
+                            >
+                                Switch Portal
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -253,24 +261,27 @@
         // Initialize the app
         async function initializeApp() {
             try {
+                console.log('Initializing app...');
+                
                 // Sign in anonymously
                 const userCredential = await auth.signInAnonymously();
                 currentUser = userCredential.user;
+                console.log('Signed in anonymously:', currentUser.uid);
                 
                 // Check if user has a saved portal ID
                 const savedPortalId = localStorage.getItem('portalId');
+                console.log('Saved portal ID:', savedPortalId);
                 
                 if (savedPortalId) {
                     // User has a portal, go directly to it
+                    console.log('Found saved portal ID, entering portal:', savedPortalId);
                     portalId = savedPortalId;
                     enterPortal(portalId);
                 } else {
                     // Show portal entry screen
+                    console.log('No saved portal ID, showing portal entry screen');
                     showPortalEntry();
                 }
-                
-                // Initialize Feather icons
-                feather.replace();
                 
             } catch (error) {
                 console.error('Error initializing app:', error);
@@ -280,12 +291,27 @@
 
         // Show portal entry screen
         function showPortalEntry() {
+            console.log('Showing portal entry screen');
             document.getElementById('loadingScreen').classList.add('hidden');
             document.getElementById('portalEntry').classList.remove('hidden');
+            
+            // Remove existing event listeners to prevent duplicates
+            const portalForm = document.getElementById('portalForm');
+            const createNewPortalBtn = document.getElementById('createNewPortal');
+            
+            // Clone and replace to remove old event listeners
+            const newPortalForm = portalForm.cloneNode(true);
+            portalForm.parentNode.replaceChild(newPortalForm, portalForm);
+            
+            const newCreateBtn = createNewPortalBtn.cloneNode(true);
+            createNewPortalBtn.parentNode.replaceChild(newCreateBtn, createNewPortalBtn);
             
             // Add event listeners for portal entry
             document.getElementById('portalForm').addEventListener('submit', handlePortalEntry);
             document.getElementById('createNewPortal').addEventListener('click', createNewPortal);
+            
+            // Initialize Feather icons for the new elements
+            feather.replace();
         }
 
         // Handle portal entry
@@ -337,6 +363,9 @@
                 // Add copy button functionality
                 document.getElementById('copyPortalId').addEventListener('click', copyPortalId);
                 
+                // Add switch portal functionality
+                document.getElementById('switchPortal').addEventListener('click', switchPortal);
+                
             } catch (error) {
                 console.error('Error entering portal:', error);
                 alert('Failed to enter portal. Please try again.');
@@ -358,6 +387,18 @@
             }).catch(() => {
                 alert('Failed to copy Portal ID. Please copy it manually: ' + portalId);
             });
+        }
+
+        // Switch to a different portal
+        function switchPortal() {
+            if (confirm('Switch to a different portal? This will clear your current portal.')) {
+                // Clear saved portal ID
+                localStorage.removeItem('portalId');
+                
+                // Hide app and show portal entry
+                document.getElementById('app').classList.add('hidden');
+                showPortalEntry();
+            }
         }
 
         // Generate a random portal ID

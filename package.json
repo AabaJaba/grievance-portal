@@ -1,0 +1,34 @@
+{
+  "name": "love-portal",
+  "version": "1.0.0",
+  "description": "A private space for Navnoor and Jahanvi to lovingly track and resolve disagreements",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'Build complete - static files ready for deployment'",
+    "deploy": "echo 'Deploy to your preferred hosting service'"
+  },
+  "keywords": [
+    "pwa",
+    "firebase",
+    "couples",
+    "relationship",
+    "communication"
+  ],
+  "author": "Navnoor & Jahanvi",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/love-portal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/love-portal/issues"
+  },
+  "homepage": "https://github.com/yourusername/love-portal#readme"
+} 

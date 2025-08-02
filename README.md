@@ -1,6 +1,6 @@
-# 💕 Couple's Grievance Portal
+# 💕 N & J's Love Portal
 
-A beautiful, private Progressive Web App (PWA) for couples to lovingly track and resolve disagreements in a collaborative, non-confrontational way.
+A beautiful, private Progressive Web App (PWA) for Navnoor and Jahanvi to lovingly track and resolve disagreements in a collaborative, non-confrontational way.
 
 ## ✨ Features
 
@@ -13,10 +13,10 @@ A beautiful, private Progressive Web App (PWA) for couples to lovingly track and
 
 ## 🎨 Design Theme
 
-The app features a "Cozy & Calm" design with:
-- Soft, off-white background (#F8F7F4)
-- Deep muted teal headers (#2A6F6F)
-- Warm dusty rose accents (#E8A09A)
+The app features a "Romantic & Loving" design with:
+- Soft pink and purple color scheme
+- Beautiful gradient buttons
+- Warm, inviting interface
 - Gentle status colors for different grievance states
 - Rounded corners and soft shadows for a friendly feel
 
@@ -86,12 +86,31 @@ You can deploy this to any static hosting service:
 
 ## 🔧 Technical Details
 
-- **Frontend**: HTML5, Tailwind CSS, Vanilla JavaScript
+- **Frontend**: HTML5, Tailwind CSS, Modular JavaScript
 - **Backend**: Firebase Firestore (NoSQL database)
 - **Authentication**: Firebase Anonymous Auth
 - **Real-time**: Firestore real-time listeners
 - **PWA**: Service Worker for offline functionality
 - **Icons**: Feather Icons for a clean, minimal look
+- **Architecture**: Modular, scalable file structure
+
+## 📁 Project Structure
+
+```
+love-portal/
+├── index.html              # Main HTML file
+├── manifest.json           # PWA manifest
+├── sw.js                  # Service worker
+├── package.json           # Project configuration
+├── README.md              # Documentation
+├── css/
+│   └── styles.css         # Custom styles
+└── js/
+    ├── config.js          # Configuration & constants
+    ├── utils.js           # Utility functions
+    ├── firebase.js        # Firebase service layer
+    └── app.js             # Main application logic
+```
 
 ## 🎯 How It Works
 

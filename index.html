@@ -81,8 +81,50 @@
         const auth = firebase.auth();
     </script>
 
+    <!-- Portal Entry Screen -->
+    <div id="portalEntry" class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 max-w-md w-full">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">💕 Couple's Grievance Portal</h1>
+                <p class="text-gray-600">Enter your shared portal to connect</p>
+            </div>
+            
+            <form id="portalForm" class="space-y-6">
+                <div>
+                    <label for="portalInput" class="block text-sm font-medium text-gray-700 mb-2">Portal ID</label>
+                    <input 
+                        type="text" 
+                        id="portalInput" 
+                        required
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200 text-center text-lg font-mono"
+                        placeholder="Enter Portal ID"
+                        maxlength="6"
+                    >
+                    <p class="text-sm text-gray-500 mt-2">Ask your partner for the Portal ID</p>
+                </div>
+                
+                <button 
+                    type="submit"
+                    class="w-full bg-teal-600 text-white py-3 px-6 rounded-full font-medium btn-hover hover:bg-teal-700 flex items-center justify-center"
+                >
+                    <i data-feather="heart" class="w-5 h-5 mr-2"></i>
+                    Connect to Portal
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <button 
+                    id="createNewPortal"
+                    class="text-teal-600 hover:text-teal-700 font-medium"
+                >
+                    Create New Portal
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Loading Screen -->
-    <div id="loadingScreen" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-50">
+    <div id="loadingScreen" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-50 hidden">
         <div class="text-center">
             <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-teal-600 mx-auto mb-4"></div>
             <p class="text-gray-600 text-lg">Loading your portal...</p>
@@ -102,6 +144,12 @@
                     <div class="text-right">
                         <p class="text-sm text-gray-500">Portal ID</p>
                         <p id="portalId" class="font-mono text-sm bg-gray-100 px-2 py-1 rounded text-gray-700"></p>
+                        <button 
+                            id="copyPortalId"
+                            class="text-xs text-teal-600 hover:text-teal-700 mt-1"
+                        >
+                            Copy ID
+                        </button>
                     </div>
                 </div>
             </div>
@@ -209,10 +257,74 @@
                 const userCredential = await auth.signInAnonymously();
                 currentUser = userCredential.user;
                 
-                // Generate or retrieve portal ID
-                portalId = localStorage.getItem('portalId') || generatePortalId();
+                // Check if user has a saved portal ID
+                const savedPortalId = localStorage.getItem('portalId');
+                
+                if (savedPortalId) {
+                    // User has a portal, go directly to it
+                    portalId = savedPortalId;
+                    enterPortal(portalId);
+                } else {
+                    // Show portal entry screen
+                    showPortalEntry();
+                }
+                
+                // Initialize Feather icons
+                feather.replace();
+                
+            } catch (error) {
+                console.error('Error initializing app:', error);
+                alert('Failed to initialize the app. Please refresh and try again.');
+            }
+        }
+
+        // Show portal entry screen
+        function showPortalEntry() {
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('portalEntry').classList.remove('hidden');
+            
+            // Add event listeners for portal entry
+            document.getElementById('portalForm').addEventListener('submit', handlePortalEntry);
+            document.getElementById('createNewPortal').addEventListener('click', createNewPortal);
+        }
+
+        // Handle portal entry
+        async function handlePortalEntry(e) {
+            e.preventDefault();
+            
+            const inputPortalId = document.getElementById('portalInput').value.trim().toUpperCase();
+            
+            if (!inputPortalId) {
+                alert('Please enter a Portal ID');
+                return;
+            }
+            
+            // Validate portal ID format (6 characters)
+            if (inputPortalId.length !== 6) {
+                alert('Portal ID must be 6 characters long');
+                return;
+            }
+            
+            enterPortal(inputPortalId);
+        }
+
+        // Create new portal
+        function createNewPortal() {
+            const newPortalId = generatePortalId();
+            enterPortal(newPortalId);
+        }
+
+        // Enter portal
+        async function enterPortal(portalIdToUse) {
+            try {
+                portalId = portalIdToUse;
                 localStorage.setItem('portalId', portalId);
                 
+                // Show loading
+                document.getElementById('portalEntry').classList.add('hidden');
+                document.getElementById('loadingScreen').classList.remove('hidden');
+                
+                // Set portal ID in header
                 document.getElementById('portalId').textContent = portalId;
                 
                 // Set up real-time listener
@@ -222,13 +334,30 @@
                 document.getElementById('loadingScreen').classList.add('hidden');
                 document.getElementById('app').classList.remove('hidden');
                 
-                // Initialize Feather icons
-                feather.replace();
+                // Add copy button functionality
+                document.getElementById('copyPortalId').addEventListener('click', copyPortalId);
                 
             } catch (error) {
-                console.error('Error initializing app:', error);
-                alert('Failed to initialize the app. Please refresh and try again.');
+                console.error('Error entering portal:', error);
+                alert('Failed to enter portal. Please try again.');
             }
+        }
+
+        // Copy portal ID to clipboard
+        function copyPortalId() {
+            navigator.clipboard.writeText(portalId).then(() => {
+                const button = document.getElementById('copyPortalId');
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('text-green-600');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('text-green-600');
+                }, 2000);
+            }).catch(() => {
+                alert('Failed to copy Portal ID. Please copy it manually: ' + portalId);
+            });
         }
 
         // Generate a random portal ID

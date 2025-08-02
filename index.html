@@ -151,12 +151,6 @@
                             >
                                 Copy ID
                             </button>
-                            <button 
-                                id="switchPortal"
-                                class="text-xs bg-gray-100 text-gray-700 hover:bg-gray-200 px-2 py-1 rounded border border-gray-300 font-medium"
-                            >
-                                🔄 Switch
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -174,7 +168,7 @@
                     </h2>
                     <button 
                         id="switchPortalMain"
-                        class="text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 px-3 py-2 rounded-lg border border-gray-300 font-medium"
+                        class="text-sm bg-rose-50 text-rose-700 hover:bg-rose-100 px-3 py-2 rounded-lg border border-rose-200 font-medium transition-colors duration-200"
                     >
                         🔄 Switch Portal
                     </button>
@@ -372,29 +366,10 @@
                 document.getElementById('copyPortalId').addEventListener('click', copyPortalId);
                 
                 // Add switch portal functionality
-                const switchPortalBtn = document.getElementById('switchPortal');
-                const switchPortalMainBtn = document.getElementById('switchPortalMain');
-                
-                console.log('Switch portal button found:', !!switchPortalBtn);
-                console.log('Switch portal main button found:', !!switchPortalMainBtn);
-                
-                // Make buttons more visible for debugging
-                if (switchPortalBtn) {
-                    switchPortalBtn.style.backgroundColor = '#fbbf24';
-                    switchPortalBtn.style.color = '#000';
-                    switchPortalBtn.textContent = '🔄 SWITCH PORTAL (HEADER)';
-                }
-                if (switchPortalMainBtn) {
-                    switchPortalMainBtn.style.backgroundColor = '#fbbf24';
-                    switchPortalMainBtn.style.color = '#000';
-                    switchPortalMainBtn.textContent = '🔄 SWITCH PORTAL (MAIN)';
-                }
+                const switchPortalBtn = document.getElementById('switchPortalMain');
                 
                 if (switchPortalBtn) {
                     switchPortalBtn.addEventListener('click', switchPortal);
-                }
-                if (switchPortalMainBtn) {
-                    switchPortalMainBtn.addEventListener('click', switchPortal);
                 }
                 
             } catch (error) {

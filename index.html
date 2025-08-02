@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Couple's Grievance Portal</title>
-    <meta name="description" content="A private space for couples to lovingly track and resolve disagreements">
-    <meta name="theme-color" content="#2A6F6F">
+            <title>Navnoor & Jahanvi's Love Portal</title>
+        <meta name="description" content="A private space for Navnoor and Jahanvi to lovingly track and resolve disagreements">
+        <meta name="theme-color" content="#8B5CF6">
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -30,18 +30,18 @@
         }
         
         .status-pending {
-            background-color: #F3D28C;
-            color: #8B4513;
+            background-color: #FCE7F3;
+            color: #BE185D;
         }
         
         .status-in-progress {
-            background-color: #AEC6CF;
-            color: #2C5F5F;
+            background-color: #E9D5FF;
+            color: #7C3AED;
         }
         
         .status-resolved {
-            background-color: #A5D6A7;
-            color: #2E7D32;
+            background-color: #DBEAFE;
+            color: #1D4ED8;
         }
         
         .btn-hover {
@@ -85,7 +85,7 @@
     <div id="portalEntry" class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 max-w-md w-full">
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-gray-800 mb-2">💕 Couple's Grievance Portal</h1>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">💕 Navnoor & Jahanvi's Love Portal</h1>
                 <p class="text-gray-600">Enter your shared portal to connect</p>
             </div>
             
@@ -105,7 +105,7 @@
                 
                 <button 
                     type="submit"
-                    class="w-full bg-teal-600 text-white py-3 px-6 rounded-full font-medium btn-hover hover:bg-teal-700 flex items-center justify-center"
+                    class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 px-6 rounded-full font-medium btn-hover hover:from-pink-600 hover:to-purple-700 flex items-center justify-center"
                 >
                     <i data-feather="heart" class="w-5 h-5 mr-2"></i>
                     Connect to Portal
@@ -115,7 +115,7 @@
             <div class="mt-6 text-center">
                 <button 
                     id="createNewPortal"
-                    class="text-teal-600 hover:text-teal-700 font-medium"
+                    class="text-purple-600 hover:text-purple-700 font-medium"
                 >
                     Create New Portal
                 </button>
@@ -126,7 +126,7 @@
     <!-- Loading Screen -->
     <div id="loadingScreen" class="fixed inset-0 bg-gray-50 flex items-center justify-center z-50 hidden">
         <div class="text-center">
-            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-teal-600 mx-auto mb-4"></div>
+            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-4"></div>
             <p class="text-gray-600 text-lg">Loading your portal...</p>
         </div>
     </div>
@@ -138,7 +138,7 @@
             <div class="max-w-4xl mx-auto px-4 py-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-3xl font-bold text-gray-800">💕 Couple's Grievance Portal</h1>
+                        <h1 class="text-3xl font-bold text-gray-800">💕 Navnoor & Jahanvi's Love Portal</h1>
                         <p class="text-gray-600 mt-1">A loving space to resolve together</p>
                     </div>
                     <div class="text-right">
@@ -147,7 +147,7 @@
                         <div class="flex gap-2 mt-1">
                             <button 
                                 id="copyPortalId"
-                                class="text-xs text-teal-600 hover:text-teal-700 px-2 py-1 rounded hover:bg-teal-50"
+                                class="text-xs text-purple-600 hover:text-purple-700 px-2 py-1 rounded hover:bg-purple-50"
                             >
                                 Copy ID
                             </button>
@@ -163,7 +163,7 @@
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-semibold text-gray-800 flex items-center">
-                        <i data-feather="plus-circle" class="w-5 h-5 mr-2 text-teal-600"></i>
+                        <i data-feather="plus-circle" class="w-5 h-5 mr-2 text-purple-600"></i>
                         Add New Grievance
                     </h2>
                     <button 
@@ -180,7 +180,7 @@
                             type="text" 
                             id="title" 
                             required
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200"
                             placeholder="What's on your mind?"
                         >
                     </div>
@@ -190,13 +190,13 @@
                             id="description" 
                             required
                             rows="3"
-                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200 resize-none"
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 resize-none"
                             placeholder="Share the details with love..."
                         ></textarea>
                     </div>
                     <button 
                         type="submit"
-                        class="w-full bg-teal-600 text-white py-3 px-6 rounded-full font-medium btn-hover hover:bg-teal-700 flex items-center justify-center"
+                        class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 px-6 rounded-full font-medium btn-hover hover:from-pink-600 hover:to-purple-700 flex items-center justify-center"
                     >
                         <i data-feather="heart" class="w-5 h-5 mr-2"></i>
                         Submit with Love
@@ -207,32 +207,32 @@
             <!-- Grievances List -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                    <i data-feather="list" class="w-5 h-5 mr-2 text-teal-600"></i>
+                                            <i data-feather="list" class="w-5 h-5 mr-2 text-purple-600"></i>
                     Our Grievances
                 </h2>
                 
                 <!-- Status Filter -->
                 <div class="flex flex-wrap gap-2 mb-6">
                     <button 
-                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 active"
+                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 active bg-purple-100 text-purple-700"
                         data-status="all"
                     >
                         All
                     </button>
                     <button 
-                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-gray-100 text-gray-600"
                         data-status="pending"
                     >
                         Pending
                     </button>
                     <button 
-                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-gray-100 text-gray-600"
                         data-status="in-progress"
                     >
                         In Progress
                     </button>
                     <button 
-                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
+                        class="status-filter px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-gray-100 text-gray-600"
                         data-status="resolved"
                     >
                         Resolved
@@ -555,10 +555,10 @@
             button.addEventListener('click', (e) => {
                 // Update active state
                 document.querySelectorAll('.status-filter').forEach(btn => {
-                    btn.classList.remove('active', 'bg-teal-100', 'text-teal-700');
+                    btn.classList.remove('active', 'bg-purple-100', 'text-purple-700');
                     btn.classList.add('bg-gray-100', 'text-gray-600');
                 });
-                e.target.classList.add('active', 'bg-teal-100', 'text-teal-700');
+                e.target.classList.add('active', 'bg-purple-100', 'text-purple-700');
                 e.target.classList.remove('bg-gray-100', 'text-gray-600');
                 
                 // Update filter

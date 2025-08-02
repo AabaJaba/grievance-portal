@@ -2,13 +2,7 @@ const CACHE_NAME = 'couples-grievance-portal-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/manifest.json',
-  'https://cdn.tailwindcss.com',
-  'https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js',
-  'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js',
-  'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js',
-  'https://unpkg.com/feather-icons',
-  'https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap'
+  '/manifest.json'
 ];
 
 // Install event

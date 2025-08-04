@@ -98,18 +98,20 @@ You can deploy this to any static hosting service:
 
 ```
 love-portal/
-├── index.html              # Main HTML file
-├── manifest.json           # PWA manifest
-├── sw.js                  # Service worker
+├── public/                 # Static files for deployment
+│   ├── index.html         # Main HTML file
+│   ├── manifest.json      # PWA manifest
+│   ├── sw.js             # Service worker
+│   ├── css/
+│   │   └── styles.css    # Custom styles
+│   └── js/
+│       ├── config.js     # Configuration & constants
+│       ├── utils.js      # Utility functions
+│       ├── firebase.js   # Firebase service layer
+│       └── app.js        # Main application logic
 ├── package.json           # Project configuration
-├── README.md              # Documentation
-├── css/
-│   └── styles.css         # Custom styles
-└── js/
-    ├── config.js          # Configuration & constants
-    ├── utils.js           # Utility functions
-    ├── firebase.js        # Firebase service layer
-    └── app.js             # Main application logic
+├── vercel.json           # Vercel deployment config
+└── README.md             # Documentation
 ```
 
 ## 🎯 How It Works

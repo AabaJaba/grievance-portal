@@ -1,0 +1,27 @@
+{
+  "name": "J & N's Love Portal",
+  "short_name": "Love Portal",
+  "description": "A private space for Navnoor and Jahanvi to lovingly track and resolve disagreements",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDF2F8",
+  "theme_color": "#8B5CF6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiByeD0iMjQiIGZpbGw9IiM4QjVDRjYiLz4KPHBhdGggZD0iTTk2IDQ4QzY5LjQ5IDQ4IDQ4IDY5LjQ5IDQ4IDk2czIxLjQ5IDQ4IDQ4IDQ4IDQ4LTIxLjQ5IDQ4LTQ4UzEyMi41MSA0OCA5NiA0OHptMCA4MGMtMTcuNjcgMC0zMi0xNC4zMy0zMi0zMnMxNC4zMy0zMiAzMi0zMiAzMiAxNC4zMyAzMiAzMi0xNC4zMyAzMi0zMiAzMnoiIGZpbGw9IiNGREYyRjgiLz4KPHBhdGggZD0iTTk2IDY0Yy0xNy42NyAwLTMyIDE0LjMzLTMyIDMyczE0LjMzIDMyIDMyIDMyIDMyLTE0LjMzIDMyLTMyLTE0LjMzLTMyLTMyLTMyem0wIDQ4Yy04LjgzIDAtMTYtNy4xNy0xNi0xNnM3LjE3LTE2IDE2LTE2IDE2IDcuMTcgMTYgMTYtNy4xNyAxNi0xNiAxNnoiIGZpbGw9IiNFQzQ4OTkiLz4KPC9zdmc+",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iNjQiIGZpbGw9IiM4QjVDRjYiLz4KPHBhdGggZD0iTTI1NiAxMjhDMTg1LjMxIDEyOCAxMjggMTg1LjMxIDEyOCAyNTZzNTcuMzEgMTI4IDEyOCAxMjggMTI4LTU3LjMxIDEyOC0xMjhTMzI2LjY5IDEyOCAyNTYgMTI4em0wIDIxM2MtNDcuMTEgMC04NS0zNy44OS04NS04NXMzNy44OS04NSA4NS04NSA4NSAzNy44OSA4NSA4NS0zNy44OSA4NS04NSA4NXoiIGZpbGw9IiNGREYyRjgiLz4KPHBhdGggZD0iTTI1NiAxNzFjLTQ3LjExIDAtODUgMzcuODktODUgODVzMzcuODkgODUgODUgODUgODUtMzcuODkgODUtODUtMzcuODktODUtODUtODV6bTAgMTI4Yy0yMy41NiAwLTQzLTE5LjQ0LTQzLTQzczE5LjQ0LTQzIDQzLTQzIDQzIDE5LjQ0IDQzIDQzLTE5LjQ0IDQzLTQzIDQzeiIgZmlsbD0iI0VDNDg5OSIvPgo8L3N2Zz4=",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "productivity"],
+  "lang": "en",
+  "dir": "ltr"
+} 

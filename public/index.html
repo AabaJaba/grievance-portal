@@ -7,10 +7,13 @@
         <meta name="description" content="A private space for Navnoor and Jahanvi to lovingly track and resolve disagreements">
         <meta name="theme-color" content="#8B5CF6">
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (Development CDN - for production, use Tailwind CLI) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Firebase SDK -->
@@ -28,22 +31,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- Firebase Config -->
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDWpMpp7WAvIrP2_5v1quV3sNEDALWnuR4",
-            authDomain: "grievance-portal-46adc.firebaseapp.com",
-            projectId: "grievance-portal-46adc",
-            storageBucket: "grievance-portal-46adc.firebasestorage.app",
-            messagingSenderId: "855890469658",
-            appId: "1:855890469658:web:e477b1c2d69c1c342902a3"
-        };
-        
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const auth = firebase.auth();
-    </script>
+
 
     <!-- Portal Entry Screen -->
     <div id="portalEntry" class="min-h-screen bg-gray-50 flex items-center justify-center px-4">

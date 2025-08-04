@@ -2,10 +2,10 @@
   "name": "love-portal",
   "version": "1.0.0",
   "description": "A private space for Navnoor and Jahanvi to lovingly track and resolve disagreements",
-  "main": "index.html",
+  "main": "public/index.html",
   "scripts": {
-    "start": "python -m http.server 8000",
-    "dev": "python -m http.server 8000",
+    "start": "cd public && python -m http.server 8000",
+    "dev": "cd public && python -m http.server 8000",
     "build": "echo 'Build complete - static files ready for deployment'",
     "deploy": "echo 'Deploy to your preferred hosting service'"
   },

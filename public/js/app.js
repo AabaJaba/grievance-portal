@@ -226,7 +226,7 @@ class LovePortalApp {
         document.getElementById('switchPortalMain').addEventListener('click', this.switchPortal.bind(this));
         
         // Initialize countdown timer
-        countdownTimer.initialize();
+        this.initializeCountdownTimer();
     }
 
     // Handle grievance form submission
@@ -308,9 +308,53 @@ class LovePortalApp {
                 this.grievanceListener();
             }
             
+            // Clean up countdown timer
+            this.cleanupCountdownTimer();
+            
             // Hide app and show portal entry
             document.getElementById('app').classList.add('hidden');
             this.showPortalEntry();
+        }
+    }
+
+    // Initialize countdown timer
+    initializeCountdownTimer() {
+        // Get next meeting date from config
+        const nextMeetingDate = new Date(APP_CONFIG.nextMeetingDate);
+        
+        // Display the meeting date
+        const dateDisplay = document.getElementById('next-meeting-date');
+        if (dateDisplay) {
+            dateDisplay.textContent = nextMeetingDate.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // Update countdown immediately
+        updateCountdownDisplay(nextMeetingDate);
+        
+        // Update countdown every second
+        this.countdownInterval = setInterval(() => {
+            const isOverdue = updateCountdownDisplay(nextMeetingDate);
+            
+            // If overdue, show a special notification
+            if (isOverdue && !this.overdueNotified) {
+                showNotification('💕 It\'s time for your meeting!', 'success');
+                this.overdueNotified = true;
+            }
+        }, 1000);
+    }
+
+    // Clean up countdown timer
+    cleanupCountdownTimer() {
+        if (this.countdownInterval) {
+            clearInterval(this.countdownInterval);
+            this.countdownInterval = null;
         }
     }
 }

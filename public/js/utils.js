@@ -100,6 +100,85 @@ function debounce(func, wait) {
     };
 }
 
+// Countdown Timer Functions
+function calculateTimeUntil(targetDate) {
+    const now = new Date().getTime();
+    const target = new Date(targetDate).getTime();
+    const difference = target - now;
+    
+    if (difference <= 0) {
+        return {
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            isOverdue: true
+        };
+    }
+    
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    
+    return {
+        days,
+        hours,
+        minutes,
+        seconds,
+        isOverdue: false
+    };
+}
+
+function formatCountdown(timeObj) {
+    if (timeObj.isOverdue) {
+        return {
+            days: '0',
+            hours: '0',
+            minutes: '0',
+            seconds: '0',
+            status: 'overdue'
+        };
+    }
+    
+    return {
+        days: timeObj.days.toString().padStart(2, '0'),
+        hours: timeObj.hours.toString().padStart(2, '0'),
+        minutes: timeObj.minutes.toString().padStart(2, '0'),
+        seconds: timeObj.seconds.toString().padStart(2, '0'),
+        status: 'counting'
+    };
+}
+
+function updateCountdownDisplay(targetDate) {
+    const timeUntil = calculateTimeUntil(targetDate);
+    const formatted = formatCountdown(timeUntil);
+    
+    // Update display elements
+    const daysEl = document.getElementById('countdown-days');
+    const hoursEl = document.getElementById('countdown-hours');
+    const minutesEl = document.getElementById('countdown-minutes');
+    const secondsEl = document.getElementById('countdown-seconds');
+    const statusEl = document.getElementById('countdown-status');
+    
+    if (daysEl) daysEl.textContent = formatted.days;
+    if (hoursEl) hoursEl.textContent = formatted.hours;
+    if (minutesEl) minutesEl.textContent = formatted.minutes;
+    if (secondsEl) secondsEl.textContent = formatted.seconds;
+    
+    if (statusEl) {
+        if (formatted.status === 'overdue') {
+            statusEl.textContent = 'Meeting time! 💕';
+            statusEl.className = 'text-pink-600 font-semibold';
+        } else {
+            statusEl.textContent = 'Until our next meeting';
+            statusEl.className = 'text-gray-600';
+        }
+    }
+    
+    return formatted.status === 'overdue';
+}
+
 // Local storage helpers
 const storage = {
     get: (key) => {

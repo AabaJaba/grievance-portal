@@ -14,6 +14,7 @@ const APP_CONFIG = {
     version: "1.0.0",
     portalIdLength: 6,
     maxGrievanceLength: 500,
+    nextMeetingDate: "2025-08-14T19:00:00", // Valentine's Day at 6 PM - Change this to your next meeting
     statusOptions: {
         pending: { label: "Pending", color: "status-pending" },
         "in-progress": { label: "In Progress", color: "status-in-progress" },

@@ -224,6 +224,9 @@ class LovePortalApp {
         
         // Switch portal
         document.getElementById('switchPortalMain').addEventListener('click', this.switchPortal.bind(this));
+        
+        // Initialize countdown timer
+        countdownTimer.initialize();
     }
 
     // Handle grievance form submission
